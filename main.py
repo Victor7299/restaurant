@@ -25,6 +25,8 @@ class Product(db.Model):
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     orders = db.relationship('OrderItem', backref='order')
+    table_id = db.Column(db.Integer, db.ForeignKey('table.id'))
+    
 
     def __str__(self) -> str:
         return f'Order #{self.id}'
@@ -42,6 +44,15 @@ class OrderItem(db.Model):
     def __repr__(self) -> str:
         return f'Product: {self.product_id} X {self.quantity}'
     
+class Table(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    table_name = db.Column(db.String(20))
+    order = db.relationship('Order', backref='order')
+
+    def __str__(self):
+        return f'Table # {self.table_name}'
+    def __repr__(self):
+        return f'Table # {self.table_name}'
 
 
 # Routes
@@ -53,7 +64,7 @@ def home():
             .add_columns(Product.name, OrderItem.quantity)\
             .filter(OrderItem.order_id==1).all()
 
-    return render_template('home.html', bill=bill)
+    return render_template('home.html')
 
 
 @app.route('/open-new-table', methods=['GET', 'POST'])
@@ -68,6 +79,13 @@ def active_tables():
 
 @app.route('/billing', methods=['GET', 'POST'])
 def billing():
+    bill = Product.query\
+            .join(OrderItem, Product.id==OrderItem.id)\
+            .add_columns(Order.table_id, Product.name, OrderItem.quantity)\
+            .filter(OrderItem.order_id==1).all()
+        
+    for i in bill:
+        print(i.table_id, i.name, i.quantity)
     return render_template('billing.html')
 
 
