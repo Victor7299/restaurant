@@ -13,11 +13,10 @@ db = SQLAlchemy(app)
 # Models
 
 class Product(db.Model):
+    __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     price = db.Column(db.Numeric(10,2), default=0.0)
-
-
     order_item = db.relationship('OrderItem', backref='product')
 
     def __str__(self) -> str:
@@ -26,11 +25,11 @@ class Product(db.Model):
         return f'Product: {self.name}'
 
 class Order(db.Model):
+    __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
-    table_id = db.Column(db.Integer, db.ForeignKey('table.id'))
+    table_id = db.Column(db.Integer, db.ForeignKey('tables.id'))
     orders = db.relationship('OrderItem', backref='order')
-    # tables = db.relationship('OrderItem', backref='table')
-    
+    is_active = db.Column(db.Boolean, default=True, nullable=False)    
 
     def __str__(self) -> str:
         return f'Order #{self.id}'
@@ -38,10 +37,11 @@ class Order(db.Model):
         return f'Order #{self.id}'
 
 class OrderItem(db.Model):
+    __tablename__ = 'order_item'
     id = db.Column(db.Integer, primary_key=True)
     quantity = db.Column(db.Integer, default=1)
-    order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
-    product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
     # table_id = db.Column(db.Integer, db.ForeignKey('table.id'))
 
     def __str__(self) -> str:
@@ -50,8 +50,9 @@ class OrderItem(db.Model):
         return f'Product: {self.product_id} X {self.quantity}'
     
 class Table(db.Model):
+    __tablename__ = 'tables'
     id = db.Column(db.Integer, primary_key=True)
-    table_name = db.Column(db.String(20))
+    table_name = db.Column(db.String(100))
     order = db.relationship('Order', backref='order')
 
     def __str__(self):
@@ -92,7 +93,7 @@ def billing():
                 OrderItem.quantity,
                 Product.price,
             )\
-            .filter(OrderItem.order_id==3)\
+            .filter(OrderItem.order_id==1)\
             .filter(Order.id==OrderItem.order_id).all()
 
     # for i in bill:
