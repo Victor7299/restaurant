@@ -15,6 +15,9 @@ db = SQLAlchemy(app)
 class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
+    price = db.Column(db.Numeric(10,2), default=0.0)
+
+
     order_item = db.relationship('OrderItem', backref='product')
 
     def __str__(self) -> str:
@@ -24,8 +27,9 @@ class Product(db.Model):
 
 class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    orders = db.relationship('OrderItem', backref='order')
     table_id = db.Column(db.Integer, db.ForeignKey('table.id'))
+    orders = db.relationship('OrderItem', backref='order')
+    # tables = db.relationship('OrderItem', backref='table')
     
 
     def __str__(self) -> str:
@@ -35,9 +39,10 @@ class Order(db.Model):
 
 class OrderItem(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    quantity = db.Column(db.Integer, default=1)
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'))
-    quantity = db.Column(db.Integer, default=1)
+    # table_id = db.Column(db.Integer, db.ForeignKey('table.id'))
 
     def __str__(self) -> str:
         return f'Product: {self.product_id} X {self.quantity}'
@@ -53,7 +58,6 @@ class Table(db.Model):
         return f'Table # {self.table_name}'
     def __repr__(self):
         return f'Table # {self.table_name}'
-
 
 # Routes
 
@@ -79,14 +83,25 @@ def active_tables():
 
 @app.route('/billing', methods=['GET', 'POST'])
 def billing():
-    bill = Product.query\
-            .join(OrderItem, Product.id==OrderItem.id)\
-            .add_columns(Order.table_id, Product.name, OrderItem.quantity)\
-            .filter(OrderItem.order_id==1).all()
-        
-    for i in bill:
-        print(i.table_id, i.name, i.quantity)
-    return render_template('billing.html')
+    bill = OrderItem.query\
+            .join(Product, OrderItem.product_id==Product.id)\
+            .add_columns(
+                OrderItem.order_id,
+                Order.table_id,
+                Product.name,
+                OrderItem.quantity,
+                Product.price,
+            )\
+            .filter(OrderItem.order_id==3)\
+            .filter(Order.id==OrderItem.order_id).all()
+
+    # for i in bill:
+    #     print("Order Id:", i.order_id,
+    #             "| Table id:", i.table_id,
+    #             "| Product Name:", i.name,
+    #             "| Quantity:", i.quantity)
+
+    return render_template('billing.html', bill=bill)
 
 
 if __name__ == '__main__':
