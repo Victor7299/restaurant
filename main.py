@@ -88,7 +88,6 @@ def billing():
             .join(Product, OrderItem.product_id==Product.id)\
             .add_columns(
                 OrderItem.order_id,
-                Order.table_id,
                 Product.name,
                 OrderItem.quantity,
                 Product.price,
