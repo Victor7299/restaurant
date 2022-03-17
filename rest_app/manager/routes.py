@@ -3,9 +3,9 @@ from rest_app.manager.models import Table, Order, OrderItem, Product
 
 manager = Blueprint('manager', __name__, template_folder='templates')
 
-@manager.route('/manager')
-def main():
-    return 'manager'
+@manager.route('/', methods=['GET'])
+def index():
+    return render_template('manager/home.html')
 
 @manager.route('/open-new-table', methods=['GET', 'POST'])
 def new_table():
