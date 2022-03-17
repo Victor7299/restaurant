@@ -1,3 +1,4 @@
+import enum
 from rest_app.extensions import db
 
 class Product(db.Model):
@@ -19,6 +20,7 @@ class Order(db.Model):
     table_id = db.Column(db.Integer, db.ForeignKey('tables.id'))
     orders = db.relationship('OrderItem', backref='order')
     is_active = db.Column(db.Boolean, default=True, nullable=False)    
+    # type_payment = None
 
     def __str__(self) -> str:
         return f'Order #{self.id}'
@@ -38,15 +40,29 @@ class OrderItem(db.Model):
         return f'Product: {self.product_id} X {self.quantity}'
     def __repr__(self) -> str:
         return f'Product: {self.product_id} X {self.quantity}'
-  
-    
+
+
 class Table(db.Model):
     __tablename__ = 'tables'
     id = db.Column(db.Integer, primary_key=True)
     table_name = db.Column(db.String(100))
+    is_active = db.Column(db.Boolean, default=True, nullable=False)
     order = db.relationship('Order', backref='order')
 
     def __str__(self):
         return f'Table # {self.table_name}'
     def __repr__(self):
         return f'Table # {self.table_name}'
+
+
+class Payments(enum.Enum):
+    cash = 'cash'
+    card = 'card'
+    other = 'other'
+
+
+class TypePayment(db.Model):
+    __tablename__ = 'type_payments'
+    id = db.Column(db.Integer, primary_key=True)
+    type = db.Column(db.Enum(Payments))
+
