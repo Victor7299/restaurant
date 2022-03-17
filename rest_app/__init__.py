@@ -1,6 +1,6 @@
 from flask import Flask
 
-from .extensions import db
+from .extensions import db, migrate
 from .manager.routes import manager
 from .config import ProductionConfig, DevelopmentConfig, TestingConfig
 
@@ -16,6 +16,7 @@ def create_app():
     
 
     db.init_app(app)
+    migrate.init_app(app, db)
 
     app.register_blueprint(manager)
 
