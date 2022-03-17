@@ -5,8 +5,14 @@ from .manager.routes import manager
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    if app.config['ENV'] == 'production':
+        app.config.from_object('rest_app.config.ProductionConfig')
+    elif app.config['ENV'] == 'development':
+        app.config.from_object('rest_app.config.DevelopmentConfig')
+    elif app.config['ENV'] == 'testing':
+        app.config.from_object('rest_app.config.TestingConfig')
+    
 
     db.init_app(app)
 
