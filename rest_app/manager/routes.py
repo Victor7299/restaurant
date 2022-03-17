@@ -1,7 +1,11 @@
 from flask import Blueprint, render_template
-from rest_app.manager.models import Table, Order, OrderItem, Product
+from rest_app.crud.models import Table, Order, OrderItem, Product
 
-manager = Blueprint('manager', __name__, template_folder='templates')
+manager = Blueprint(
+    'manager',
+    __name__,
+    template_folder='templates',
+)
 
 @manager.route('/', methods=['GET'])
 def index():
