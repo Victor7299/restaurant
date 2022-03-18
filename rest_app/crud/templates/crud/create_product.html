@@ -1,0 +1,18 @@
+{% extends 'crud/base.html' %}
+
+{% block content %}
+
+<form action="">
+    {{ product_form.csrf_token }}
+
+    {{ product_form.name.label}}
+    {{ product_form.name}}
+
+    {{ product_form.price.label}}
+    {{ product_form.price}}
+
+</form>
+<h1>ASD</h1>
+
+
+{% endblock content %}
