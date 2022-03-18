@@ -1,17 +1,43 @@
 {% extends 'crud/base.html' %}
-{% from '_render_form.html' import render_field %}
+{% from 'crud/_render_field.html' import render_field %}
 {% block content %}
 
 <div class="container">
     <div class="row">
-
-        <form method="POST" action="{{ url_for('crud.create_table') }}">
-            
-            <!-- RENDER -->
-        
-            <input type="submit" value="SUBMIT">
-        </form>
-
+        <div class="col-12 col-md-6">
+            <form method="POST" class="form-horizontal" action="{{ url_for('crud.create_table') }}">
+                {{ table_form.csrf_token }}
+                {{ render_field(table_form.table_name) }}
+    
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="col-12 col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            #
+                        </th>
+                        <th scope="col">
+                            Table Name
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for table in tables %}
+                    <tr>
+                        <th scope="col">
+                            {{ loop.index }}
+                        </th>
+                        <th scope="col">
+                            {{ table.table_name }}
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

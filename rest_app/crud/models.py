@@ -3,7 +3,7 @@ from rest_app.extensions import db
 class Product(db.Model):
     __tablename__ = 'products'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
+    name = db.Column(db.String(100), unique=True)
     price = db.Column(db.Numeric(10,2), default=0.0)
     order_item = db.relationship('OrderItem', backref='product')
 
@@ -44,7 +44,7 @@ class OrderItem(db.Model):
 class Table(db.Model):
     __tablename__ = 'tables'
     id = db.Column(db.Integer, primary_key=True)
-    table_name = db.Column(db.String(100))
+    table_name = db.Column(db.String(100), unique=True)
     is_active = db.Column(db.Boolean, default=False, nullable=False)
     order = db.relationship('Order', backref='order')
 

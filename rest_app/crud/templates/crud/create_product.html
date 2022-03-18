@@ -1,18 +1,55 @@
 {% extends 'crud/base.html' %}
-
+{% from 'crud/_render_field.html' import render_field %}
 {% block content %}
 
-<form action="">
-    {{ product_form.csrf_token }}
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <form method="POST" class="form-horizontal" action="{{ url_for('crud.create_product') }}">
+                {{ product_form.csrf_token }}
 
-    {{ product_form.name.label}}
-    {{ product_form.name}}
+                {{ render_field(product_form.name) }}
+    
+                {{ render_field(product_form.price) }}
+    
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+        <div class="col-12 col-md-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            #
+                        </th>
+                        <th scope="col">
+                            Product Name
+                        </th>
+                        <th scope="col">
+                            Price
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <th scope="col">
+                            {{ loop.index }}
+                        </th>
+                        <th scope="col">
+                            {{ product.name }}
+                        </th>
+                        <th scope="col">
+                            {{ product.price }}
+                        </th>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-    {{ product_form.price.label}}
-    {{ product_form.price}}
-
-</form>
-<h1>ASD</h1>
 
 
 {% endblock content %}
