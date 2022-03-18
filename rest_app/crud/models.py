@@ -45,18 +45,18 @@ class Table(db.Model):
     __tablename__ = 'tables'
     id = db.Column(db.Integer, primary_key=True)
     table_name = db.Column(db.String(100))
-    is_active = db.Column(db.Boolean, default=True, nullable=False)
+    is_active = db.Column(db.Boolean, default=False, nullable=False)
     order = db.relationship('Order', backref='order')
 
     def __str__(self):
-        return f'Table # {self.table_name}'
+        return f'Table: {self.table_name}'
     def __repr__(self):
-        return f'Table # {self.table_name}'
+        return f'Table: {self.table_name}'
 
 
 class TypePayment(db.Model):
     __tablename__ = 'type_payments'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
-    order = db.relationship('Order', backref='order')
+    # order = db.relationship('Order', backref='order')
 
