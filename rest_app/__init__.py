@@ -3,18 +3,18 @@ from flask import Flask
 from .extensions import db, migrate
 from .manager.routes import manager
 from .crud.routes import crud
-from .config import ProductionConfig, DevelopmentConfig, TestingConfig
 
 def create_app():
     app = Flask(__name__)
 
     if app.config['ENV'] == 'production':
-        app.config.from_object(ProductionConfig)
+        from .config import ProductionConfig as Config
     elif app.config['ENV'] == 'development':
-        app.config.from_object(DevelopmentConfig)
+        from .config import DevelopmentConfig as Config
     elif app.config['ENV'] == 'testing':
-        app.config.from_object(TestingConfig)
+        from .config import TestingConfig as Config
     
+    app.config.from_object(Config)
 
     db.init_app(app)
     migrate.init_app(app, db)
