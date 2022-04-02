@@ -1,0 +1,23 @@
+{% extends 'crud/base.html' %}
+{% from 'crud/_render_field.html' import render_field %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <form method="POST" class="form-horizontal" action="{{ url_for('crud.update_product', id=product.id) }}">
+                {{ product_form.csrf_token }}
+
+                {{ render_field(product_form.name, value=product.name) }}
+    
+                {{ render_field(product_form.price, value=product.price) }}
+    
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>>
+</div>
+
+
+
+{% endblock content %}

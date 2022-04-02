@@ -1,7 +1,23 @@
 {% extends 'crud/base.html' %}
 
 {% block content %}
-<h1>HOME CRUD</h1>
+<div class="container text-center">
+    <h1>HOME CRUD</h1>
+</div>
+
+<div class="container">
+    <div class="row offset-3 offset-md-0 ">
+        <div class="col-8 col-md-6">
+            <a href="{{ url_for('crud.create_table') }}" class="btn btn-danger btn-block mt-4 mb-4 py-4 pb-4">Tables</a>
+        </div>
+        <div class="col-8 col-md-6">
+            <a href="{{ url_for('crud.create_product')}}" class="btn btn-danger btn-block mt-4 mb-4 py-4 pb-4">Products</a>
+        </div>
+        <!-- <div class="col-8 col-md-4">
+            <a href="/billing" class="btn btn-danger btn-block mt-4 mb-4 py-4 pb-4">Pedir Cuenta</a>
+        </div> -->
+    </div>
+</div>
 
 
 

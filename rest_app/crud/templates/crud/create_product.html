@@ -28,6 +28,9 @@
                         <th scope="col">
                             Price
                         </th>
+                        <th scope="col">
+                            Actions
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +44,10 @@
                         </th>
                         <th scope="col">
                             {{ product.price }}
+                        </th>
+                        <th>
+                            <a class="btn btn-primary"href="{{url_for('crud.update_product', id=product.id)}}">Update</a>
+                            <a class="btn btn-danger"href="{{url_for('crud.delete_product',id=product.id)}}">Delete</a>
                         </th>
                     </tr>
                     {% endfor %}

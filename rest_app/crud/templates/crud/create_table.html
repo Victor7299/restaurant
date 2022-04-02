@@ -22,6 +22,9 @@
                         <th scope="col">
                             Table Name
                         </th>
+                        <th>
+                            Actions
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -32,6 +35,10 @@
                         </th>
                         <th scope="col">
                             {{ table.table_name }}
+                        </th>
+                        <th>
+                            <a class="btn btn-primary"href="{{url_for('crud.update_table', id=table.id)}}">Update</a>
+                            <a class="btn btn-danger"href="{{url_for('crud.delete_table',id=table.id)}}">Delete</a>
                         </th>
                     </tr>
                     {% endfor %}

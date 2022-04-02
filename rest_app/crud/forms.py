@@ -10,7 +10,7 @@ class ProductForm(FlaskForm):
         ],
     )
     price = DecimalField(
-        label='price',
+        label='Price',
         validators=[
             InputRequired()
         ],
