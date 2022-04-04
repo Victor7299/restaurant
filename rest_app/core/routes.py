@@ -11,13 +11,6 @@ core = Blueprint(
 def index():
     return render_template('core/home.html')
 
-@core.route('/list-active-tables', methods=['GET'])
-def list_active_tables():
-    tables = Table.query.filter_by(is_active=True).order_by(Table.table_name).all()
-    context = {
-        'tables': tables,
-    }
-    return render_template('core/list_tables.html', **context)
 
 @core.route('/list-tables/<string:status>', methods=['GET'])
 def list_tables(status):
