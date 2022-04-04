@@ -1,5 +1,8 @@
+from multiprocessing import context
 from flask import Blueprint, render_template, abort
+from rest_app.core.models import Order, OrderItem
 from rest_app.crud.models import Table, Product
+from rest_app.core.utils import change_table_status, create_order
 
 core = Blueprint(
     'core',
@@ -14,13 +17,16 @@ def index():
 
 @core.route('/list-tables/<string:status>', methods=['GET'])
 def list_tables(status):
-    dict_status = {
+    # dict_status: use to reder tables depends on the status active or nonactive, 
+    # I decided to use it for not to duplicate code...
+    dict_status = { 
         'active': True,
         'nonactive': False,
     }
     
-    if status not in list(dict_status.keys()): abort(404)
-    
+    if status not in list(dict_status.keys()): # this route only have 2 options to work
+        abort(404) 
+    # Using dict_status[status] to determinate the table status
     tables = Table.query.filter_by(is_active=dict_status[status]).order_by(Table.table_name).all()
     context = {
         'tables': tables,
@@ -33,9 +39,17 @@ def list_tables(status):
 def manage_tables():
     return render_template('core/manage_tables.html')
 
-@core.route('/open-new-table/<int:id>')
+@core.route('/open-new-table/<int:id>', methods=['GET', 'POST'])
 def open_new_table(id):
-    return render_template('core/new_table.html')
+    change_table_status(id)
+    order = create_order(id)
+    order_items = OrderItem.query.filter_by(order_id=order.id).all()
+    context = {
+        'order': order,
+        'table_id': id,
+        'order_items': order_items,
+    }
+    return render_template('core/new_table.html', **context)
 
 
 @core.route('/active-tables', methods=['GET', 'POST'])
