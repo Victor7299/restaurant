@@ -17,7 +17,7 @@ def index():
 
 @core.route('/list-tables/<string:status>', methods=['GET'])
 def list_tables(status):
-    # dict_status: use to reder tables depends on the status active or nonactive, 
+    # dict_status: use to render tables depends on the status active or nonactive, 
     # I decided to use it for not to duplicate code...
     dict_status = { 
         'active': True,

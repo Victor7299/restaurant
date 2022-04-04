@@ -3,6 +3,7 @@ from flask import Flask
 from .extensions import db, migrate
 from .core.routes import core
 from .crud.routes import crud
+from .api.endpoints import api
 
 def create_app():
     app = Flask(__name__)
@@ -21,5 +22,5 @@ def create_app():
 
     app.register_blueprint(core)
     app.register_blueprint(crud)
-
+    app.register_blueprint(api)
     return app

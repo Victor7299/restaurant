@@ -63,5 +63,29 @@
     </tr>
 </table>
 
+<script>
+    $(document).ready(function(){
+        load_data();
+        function load_data(query){
+            $.ajax({
+                url: "{{ url_for('api.products') }}",
+                method: "POST",
+                data: {query: query},
+                success: function(data){
+                    $('result').html(data)
+                }
+            })
+        }
+        $('#search_text').keyup(function(){
+            let search = $(this).val()
+            if (search != ''){
+                load_data(search)
+            } else {
+                load_data()
+            }
+        })
+    }
+    )
+</script>
 
 {% endblock body %}
