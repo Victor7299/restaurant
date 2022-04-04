@@ -1,4 +1,4 @@
-{% extends 'manager/base.html' %}
+{% extends 'core/base.html' %}
 
 {% block body %}
 
@@ -28,7 +28,7 @@
     <!--  -->
     {% for i in bill %}
     <tr>
-        <th scope=""row>
+        <!-- <th scope=""row>
             {{ loop.index }}
         </th>
         <th scope=""row>
@@ -42,7 +42,8 @@
         </th>
         <th scope=""row>
             {{ i.price * i.quantity }}
-        </th>
+        </th> -->
+        <ul>a</ul>
     </tr>
     {% endfor %}
     <!--  -->    

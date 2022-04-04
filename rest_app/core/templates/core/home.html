@@ -1,0 +1,33 @@
+{% extends 'core/base.html' %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row offset-3 offset-md-0 ">
+        <div class="col-8 col-md-4">
+            <a href="{{ url_for('crud.index') }}" class="btn btn-danger btn-block mt-4 mb-4 py-4 pb-4">Create</a>
+        </div>
+        <div class="col-8 col-md-4">
+            <a href="{{ url_for('core.manage_tables') }}" class="btn btn-danger btn-block mt-4 mb-4 py-4 pb-4">Manage Tables</a>
+        </div>
+        <div class="col-8 col-md-4">
+            <a href="#" class="btn btn-danger btn-block mt-4 mb-4 py-4 pb-4">Others</a>
+        </div>
+    </div>
+</div>
+
+
+<!-- <div class="container">
+    <div class="row offset-3 offset-md-0 ">
+        <div class="col-8 col-md-4">
+            <a href="/open-new-table" class="btn btn-danger btn-block mt-4 mb-4 py-4 pb-4">Open New Table</a>
+        </div>
+        <div class="col-8 col-md-4">
+            <a href="/active-tables" class="btn btn-danger btn-block mt-4 mb-4 py-4 pb-4">Active Tables</a>
+        </div>
+        <div class="col-8 col-md-4">
+            <a href="/billing" class="btn btn-danger btn-block mt-4 mb-4 py-4 pb-4">Billing</a>
+        </div>
+    </div>
+</div> -->
+{% endblock body %}

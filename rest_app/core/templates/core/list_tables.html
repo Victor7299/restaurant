@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+
+{% block body %}
+
+Select a table to open 
+
+<div class="container">
+    <div class="row">
+        {% for table in tables %}
+            <div class="col-md-3 col-6">
+                <a href="{{ url_for('core.open_new_table', id=table.id) }}" class="btn btn-danger btn-block mt-4 mb-4 py-4 pb-4">{{ table.table_name }}</a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock body %}

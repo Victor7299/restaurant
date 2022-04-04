@@ -1,7 +1,7 @@
 from flask import Flask
 
 from .extensions import db, migrate
-from .manager.routes import manager
+from .core.routes import core
 from .crud.routes import crud
 
 def create_app():
@@ -19,7 +19,7 @@ def create_app():
     db.init_app(app)
     migrate.init_app(app, db)
 
-    app.register_blueprint(manager)
+    app.register_blueprint(core)
     app.register_blueprint(crud)
 
     return app

@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+{% block body %}
+
+<h1>New Table</h1>
+<div class="container">
+    <form action="">
+        <div class="form-row">
+            <div class="form-group col-8">
+                <label class="control-form-label" for="nameSearch">Search: </label>
+                <input class="form-control" type="search" name="nameSearch" id="nameSearch">
+            </div>
+            <div class="form-group col-4">
+                <label class="control-form-label" for="quantity">Quantity</label>
+                <input class="form-control" type="number" name="quantity" id="quantity" value="1">
+            </div>
+            <div class="col-12">
+                <label class="control-form-label" for="comments">Comments:</label>
+                <textarea class="form-control" name="comments" id="comments"></textarea>
+            </div>
+            <div class="col-12">
+                <input class="btn btn-primary my-4" type="submit" value="Submit">
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                #
+            </th>
+            <th scope="col">
+                Product
+            </th>
+            <th scope="col">
+                Quantity
+            </th>
+        </tr>
+    </thead>
+    <tr>
+        <th scope="row">
+            1
+        </th>
+        <th scope="row">
+            Chaufa con pollo
+        </th>
+        <th scope="row">
+            4
+        </th>
+    </tr>
+    <tr>
+        <th scope="row">
+            2
+        </th>
+        <th scope="row">
+            Chijaukay con ostión
+        </th>
+        <th scope="row">
+            2
+        </th>
+    </tr>
+</table>
+
+
+{% endblock body %}
